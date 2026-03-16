@@ -279,4 +279,4 @@ Este proyecto no es solo una prueba técnica de una herramienta; es una implemen
 *   **Troubleshooting:** Resolución de problemas de performance y memoria en entornos virtualizados (VM Kali Linux).
 
 ---
-*Este repositorio ha sido documentado con fines profesionales para demostrar capacidades técnicas en auditoría de código y seguridad ofensiva/defensiva.*
+
