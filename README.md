@@ -50,7 +50,7 @@ Para asegurar que el demonio de Docker se inicie de forma automática con el sis
 sudo systemctl enable docker --now
 ```
 
-![Habilitando Docker](images/enable_docker.png)
+![Habilitando Docker](images/01_docker_kali.png)
 *Resultado de la habilitación del servicio Docker en el sistema.*
 
 ### Fase 3: Preparación del Código de Prueba (Vulnerable)
@@ -76,7 +76,8 @@ funcion_trampa()
 > **🛡️ Contexto de Seguridad y Calidad:** Este simple fragmento disparará tres alertas distintas en SonarQube:
 > 1. **Vulnerability:** Almacenamiento de contraseñas *hardcodeadas* directamente en código fuente (altamente crítico).
 > 2. **Code Smell:** Declaración de variables que luego nunca se usan, lo que ensucia y confunde en mantenimientos futuros.
-> 3. **Bug:** La instrucción `print` se encuentra después de una sentencia `return`, por lo tanto es código muerto/inalcanzable (Dead Code).
+![Código vulnerable en Nano](images/02_vulnerable_code.png)
+*Script `vulnerable.py` editado con Nano, mostrando incidencias de seguridad y calidad.*
 
 ### Fase 4: Despliegue de SonarQube
 
@@ -114,13 +115,13 @@ Nos dirigimos a `http://localhost:9000` (o a la IP correspondiente de la VM) e i
     * **Usuario:** `admin`
     * **Contraseña:** `admin`
 
-![Inicio de sesión en SonarQube](images/login_sonarqube.png)
+![Inicio de sesión en SonarQube](images/03_sonarqube_login.png)
 *Pantalla de inicio de sesión estándar de SonarQube.*
 
 2. **Refuerzo de Credenciales:**
 Como dicta cualquier buena política de seguridad, la plataforma fuerce inmediatamente el cambio de la contraseña por defecto. Reemplazamos la contraseña por una fuerte y segura.
 
-![Cambio de contraseña obligatoria](images/update_password.png)
+![Cambio de contraseña obligatoria](images/04_password_update.png)
 *Proceso de cambio de contraseña del administrador.*
 
 3. **Generación de Token de Acceso (Best Practice):**
@@ -129,11 +130,11 @@ Evitaremos utilizar el combo de usuario/contraseña para enviar los reportes de 
     * Seleccionamos la opción **Tokens** sobre nuestro usuario.
     * Generamos un *User Token* nombrándolo `Vulnerabilidades`.
 
-![Generación del Token en la interfaz](images/generate_token.png)
+![Generación del Token en la interfaz](images/05_token_generation.png)
 *Panel de administración de tokens de seguridad y accesos.*
 
-![Token Creado Exitosamente](images/token_created.png)
-*Token generado con éxito: `squ_80f32df6860b0817c39a0dc4b2cb7` (Nota: en un entorno real debe guardarse de forma segura como un secreto, p. ej. en GitHub Secrets o un Vault).*
+![Token Creado Exitosamente](images/06_token_created.png)
+*Token generado con éxito.*
 
 ### Fase 6: Análisis de Código Estático (SAST) mediante SonarScanner
 
@@ -176,13 +177,13 @@ Navegamos a la pestaña **Quality Profiles** en el menú superior. Creamos un nu
     * **Language:** `Python`
     * **Profile to extend:** `Sonar way (Built-in)` (esto hereda las reglas estándar y nos permite añadir nuevas).
 
-![Creación de Perfil](images/create_quality_profile.png)
+![Creación de Perfil](images/07_quality_profile_creation.png)
 *Creación de un nuevo Quality Profile extendiendo el predeterminado.*
 
 2. **Activación de Reglas de Inyección (OS Command & SQL):**
 Dentro del nuevo perfil `Vulnerabilidades`, hacemos clic en el botón **"Activate More"** situado debajo de las estadísticas de reglas activas/inactivas.
 
-![Botón Activate More](images/activate_more.png)
+![Botón Activate More](images/08_activate_more_rules.png)
 *Acceso al buscador de reglas inactivas para habilitarlas en nuestro perfil.*
 
 En la barra de búsqueda de reglas ingresamos los siguientes términos y pulsamos **"Activate"** en las reglas de Python que aparezcan:
@@ -192,7 +193,7 @@ En la barra de búsqueda de reglas ingresamos los siguientes términos y pulsamo
 3. **Establecer como Perfil por Defecto:**
 Una vez activadas las reglas necesarias, debemos asegurarnos de que SonarScanner utilice este perfil de forma automática para todos los proyectos de Python. En la lista principal de *Quality Profiles*, hacemos clic en el engranaje junto al perfil `Vulnerabilidades` y seleccionamos **"Set as Default"**.
 
-![Set as Default Profile](images/set_as_default.png)
+![Set as Default Profile](images/09_set_as_default.png)
 *Configuración del nuevo perfil extendido como el predeterminado para el análisis de código Python.*
 
 De esta manera, hemos blindado nuestra configuración, asegurándonos de que nuestro script `vulnerable.py` sea auditado con el mayor rigor posible.
@@ -201,7 +202,7 @@ De esta manera, hemos blindado nuestra configuración, asegurándonos de que nue
 
 Tras la ejecución del contenedor de `sonar-scanner-cli`, los resultados se envían automáticamente a nuestro servidor web de SonarQube, procesándose en tiempo real. Al abrir la pestaña de nuestro proyecto en el *Dashboard* principal, visualizaremos la auditoría crítica que evidencia los problemas insertados en la *Fase 3*:
 
-![Resultados del Dashboard](images/sonarqube_failed.png)
+![Resultados del Dashboard](images/10_dashboard_results.png)
 *Dashboard principal del proyecto mostrando el incumplimiento del Quality Gate.*
 
 **Análisis Técnico del Reporte (Métricas Clave):**
@@ -244,12 +245,12 @@ def funcion_segura():
 funcion_segura()
 ```
 
-![Refactorización del código fuente en Nano](images/vulnerable_py_fixed.png)
+![Refactorización del código fuente en Nano](images/11_fixed_code_remediation.png)
 *Código fuente modificado, habiendo eliminado las credenciales embebidas, el bloque inalcanzable y los anti-patrones.*
 
 Una vez aplicados los cambios en el archivo, ejecutamos nuevamente el contenedor de `sonar-scanner-cli` con el mismo comando exacto de la *Fase 6*. El escáner reevaluará el proyecto completo y enviará el nuevo *commit* de análisis al servidor:
 
-![Gráfico de Actividad y Quality Gate Superado](images/activity.png)
+![Gráfico de Actividad y Quality Gate Superado](images/12_activity_graph_passed.png)
 *Historial de Actividad del proyecto en SonarQube.*
 
 **Análisis de la Remediación:**
