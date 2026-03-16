@@ -270,5 +270,23 @@ Este proyecto no es solo una prueba técnica de una herramienta; es una implemen
 2.  **Estandarización de Calidad:** Asegura que todo el código del equipo mantenga un estilo y seguridad homogéneo mediante la aplicación de *Quality Profiles* y *Quality Gates*.
 3.  **Cumplimiento Normativo:** Facilita el cumplimiento de estándares como ISO 27001 o GDPR al demostrar procesos activos de revisión de seguridad.
 
+### Habilidades Técnicas Demostradas (para CV/Portfolio)
+
+*   **DevSecOps:** Implementación de auditorías de seguridad automáticas en el ciclo de vida del software.
+*   **Virtualización y Contenedores:** Despliegue de infraestructura compleja (SonarQube + Elasticsearch + DB) mediante **Docker** y gestión de límites del Kernel en Linux.
+*   **Análisis SAST:** Configuración avanzada de motores de reglas estáticas, creación de perfiles de calidad personalizados y establecimiento de umbrales de seguridad (*Quality Gates*).
+*   **Python Security:** Conocimiento de vulnerabilidades comunes (Hardcoded secrets, Inyecciones, Dead Code) y técnicas de remediación segura (Environment Variables, refactorización lógica).
+*   **Troubleshooting:** Resolución de problemas de performance y memoria en entornos virtualizados (VM Kali Linux).
+
 ---
 
+### 👤 Autor
+* **Ismael A. Pérez Segura** - [LinkedIn](https://www.linkedin.com/in/ismael-perez-segura/)
+
+---
+
+### ⚠️ Aviso Legal
+Este proyecto tiene únicamente fines educativos y de pruebas de seguridad ética. El acceso no autorizado a sistemas informáticos es ilegal. El autor no se hace responsable del mal uso de la información o el código proporcionado en este repositorio.
+
+---
+*Este repositorio ha sido documentado con fines profesionales para demostrar capacidades técnicas en auditoría de código y seguridad ofensiva/defensiva.*
