@@ -77,6 +77,7 @@ funcion_trampa()
 > 1. **Vulnerability:** Almacenamiento de contraseñas *hardcodeadas* directamente en código fuente (altamente crítico).
 > 2. **Code Smell:** Declaración de variables que luego nunca se usan, lo que ensucia y confunde en mantenimientos futuros.
 ![Código vulnerable en Nano](images/02_vulnerable_code.png)
+
 *Script `vulnerable.py` editado con Nano, mostrando incidencias de seguridad y calidad.*
 
 ### Fase 4: Despliegue de SonarQube
